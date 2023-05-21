@@ -18,18 +18,22 @@ const Header = () => {
     fields.forEach((field) => {
       output[field.type] = field.values;
     });
-    let request = {
-      title: output?.title?.title || "",
-      body: output?.subTitle?.title || "",
-      textBoxText: output?.input?.placeholder || "",
-      buttonText: output?.button?.label || "",
-      icon: output?.logo?.logoLink || "",
-    };
-    try {
-      await addFormData(request);
-      setSnackBarMsg(formSubmitSuccessMsg);
-    } catch (e) {
-      setSnackBarMsg(somethingWentWrongMsg);
+    if (Object.keys(output).length) {
+      let request = {
+        title: output?.title?.title || "",
+        body: output?.subTitle?.title || "",
+        textBoxText: output?.input?.placeholder || "",
+        buttonText: output?.button?.label || "",
+        icon: output?.logo?.logoLink || "",
+      };
+      try {
+        await addFormData(request);
+        setSnackBarMsg(formSubmitSuccessMsg);
+      } catch (e) {
+        setSnackBarMsg(somethingWentWrongMsg);
+      }
+    } else {
+      alert("Select atleast one field to submit.");
     }
   };
 
